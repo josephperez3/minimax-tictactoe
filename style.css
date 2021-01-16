@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    border: 5px black;
 }
 body {
     color: #545454;
@@ -31,6 +30,7 @@ body {
     justify-content: space-around;
     margin-top: 20px;
     font-size: 25px;
+    font-weight: bold;
 }
 
 .reset {
@@ -47,12 +47,30 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     grid-gap: 15px;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .game-cell {
     background-color: #14bdac;
+    display: flex;
     cursor: pointer;
     height: 200px;
     width: 200px;
+    justify-content: center;
+    align-items: center;
+}
+
+.x::after {
+    content: "X";
+    font-size: 175px;
+}
+
+.o::after {
+    content: "O";
+    font-size: 175px;
+    color: #f5f1e6;
+}
+
+.winner::after {
+    color: red;
 }
