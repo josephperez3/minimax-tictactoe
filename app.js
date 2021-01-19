@@ -10,10 +10,6 @@ const checkGameStatus = () => {
     for (const cellDiv of cellDivs) {
         gameStatus.push(cellDiv.classList[2]);
     }
-    if (gameStatus.filter((s) => s == "x").length == 5) {
-        handleTie();
-        return;
-    }
     // check horizontal win (make fn)
     for (let i = 0; i < 9; i += 3) {
         if (isWinner(gameStatus[i], gameStatus[i + 1], gameStatus[i + 2])) {
@@ -42,6 +38,9 @@ const checkGameStatus = () => {
         console.log("right to left");
         handleWinner(gameStatus[2], 2, 4, 6);
         return;
+    }
+    if (gameStatus.filter((s) => s == "x").length == 5) {
+        handleTie();
     }
 };
 
