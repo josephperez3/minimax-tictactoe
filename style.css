@@ -3,14 +3,14 @@
     padding: 0;
 }
 body {
-    color: #545454;
+    color: #283618;
     display: flex;
     font-family: sans-serif;
     justify-content: center;
 }
 
 .container {
-    background: #14bdac;
+    background: #dda15e;
     border-radius: 25px;
     border: 20px black;
     margin: 50px;
@@ -22,15 +22,16 @@ body {
 }
 
 .title span {
-    color: #f2ebd3;
+    color: #fefae0;
 }
 
 .status-action {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
     margin-top: 20px;
     font-size: 25px;
     font-weight: bold;
+    grid-template-columns: repeat(2, 3fr);
+    text-align: center;
 }
 
 .reset {
@@ -38,12 +39,12 @@ body {
 }
 
 .reset:hover {
-    color: #f2ebd3;
+    color: #fefae0;
 }
 
 .game-grid {
     display: grid;
-    background-color: #0da192;
+    background-color: #283618;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     grid-gap: 15px;
@@ -51,24 +52,24 @@ body {
 }
 
 .game-cell {
-    background-color: #14bdac;
+    background-color: #dda15e;
     display: flex;
     cursor: pointer;
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     justify-content: center;
     align-items: center;
 }
 
 .x::after {
     content: "X";
-    font-size: 175px;
+    font-size: 130px;
 }
 
 .o::after {
     content: "O";
-    font-size: 175px;
-    color: #f5f1e6;
+    font-size: 130px;
+    color: #fefae0;
 }
 
 .winner::after {
