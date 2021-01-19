@@ -74,7 +74,7 @@ const handleReset = () => {
         cellDiv.classList.remove("winner");
     }
     statusDiv.classList.remove("winnerText");
-    statusDiv.innerHTML = "X turn";
+    statusDiv.innerHTML = "Next: X";
 };
 
 const isWinner = (cell1, cell2, cell3) => {
@@ -100,7 +100,11 @@ const handleCellClick = (e) => {
             classList.add("o");
             xIsNext = !xIsNext;
         }
-        statusDiv.innerHTML = (xIsNext ? "X" : "O") + " turn";
+        if (xIsNext) {
+            statusDiv.innerHTML = "Next: X";
+        } else {
+            statusDiv.innerHTML = "Next: <span>O</span>";
+        }
         checkGameStatus();
     }
 };

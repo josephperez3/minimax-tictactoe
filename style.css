@@ -34,6 +34,10 @@ body {
     text-align: center;
 }
 
+.status-action span {
+    color: #fefae0;
+}
+
 .reset {
     cursor: pointer;
 }
