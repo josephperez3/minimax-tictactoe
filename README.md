@@ -1,2 +1,4 @@
 # minimax-tictactoe
-Using knowledge of trees to create a formidable Tic Tac Toe opponent with the minimax algorithm.
+Created a visual Tic Tac Toe game using JavaScript. 
+
+I plan to use the minimax algorithm to create an AI for the game.
