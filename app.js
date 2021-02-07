@@ -10,46 +10,26 @@ const checkGameStatus = () => {
     for (const cellDiv of cellDivs) {
         gameStatus.push(cellDiv.classList[2]);
     }
-    // check horizontal win (make fn)
-    for (let i = 0; i < 9; i += 3) {
-        if (isWinner(gameStatus[i], gameStatus[i + 1], gameStatus[i + 2])) {
-            console.log("row", i / 3);
-            handleWinner(gameStatus[i], i, i + 1, i + 2);
-            return;
-        }
-    }
-    // check vertical win (make fn)
-    for (let i = 0; i < 3; i++) {
-        if (isWinner(gameStatus[i], gameStatus[i + 3], gameStatus[i + 6])) {
-            console.log("column", i);
-            handleWinner(gameStatus[i], i, i + 3, i + 6);
-            return;
-        }
-    }
-    // check diagonal win (make fn)
-    // left to right diagonal
-    if (isWinner(gameStatus[0], gameStatus[4], gameStatus[8])) {
-        console.log("left to right");
-        handleWinner(gameStatus[0], 0, 4, 8);
-        return;
-    }
-    // right to left diagonal
-    if (isWinner(gameStatus[2], gameStatus[4], gameStatus[6])) {
-        console.log("right to left");
-        handleWinner(gameStatus[2], 2, 4, 6);
-        return;
-    }
-    if (gameStatus.filter((s) => s == "x").length == 5) {
+    getAvailableSquares(gameStatus);
+    winner = findWinner(gameStatus);
+    if (winner) {
+        handleWinner(winner);
+    } else if (checkTie(gameStatus)) {
         handleTie();
     }
 };
 
-const handleWinner = (winner, cell1, cell2, cell3) => {
+const handleWinner = (winner) => {
+    const winningLetter = winner[0];
+    const cell1 = winner[1];
+    const cell2 = winner[2];
+    const cell3 = winner[3];
     const addWinner = (divIndex) => {
         cellDivs[divIndex].classList.add("winner");
     };
     const changeStatus = () => {
-        statusDiv.innerHTML = "WINNER: " + winner.toUpperCase();
+        console.log(winner);
+        statusDiv.innerHTML = "WINNER: " + winningLetter.toUpperCase();
         statusDiv.classList.add("winnerText");
     };
     setTimeout(addWinner, 0, cell1);
@@ -75,14 +55,6 @@ const handleReset = () => {
     }
     statusDiv.classList.remove("winnerText");
     statusDiv.innerHTML = "Next: X";
-};
-
-const isWinner = (cell1, cell2, cell3) => {
-    return cell1 && cell1 == cell2 && cell2 == cell3;
-};
-
-const verticalWin = (cell1, cell2, cell3) => {
-    return cell1 && cell1 == cell2;
 };
 
 const handleCellClick = (e) => {
