@@ -10,7 +10,8 @@ const checkGameStatus = () => {
     for (const cellDiv of cellDivs) {
         gameStatus.push(cellDiv.classList[2]);
     }
-    getAvailableSquares(gameStatus);
+    nextPlayer = xIsNext ? "x" : "o";
+    console.log(getBestMove(gameStatus, nextPlayer, nextPlayer));
     winner = findWinner(gameStatus);
     if (winner) {
         handleWinner(winner);
@@ -28,7 +29,6 @@ const handleWinner = (winner) => {
         cellDivs[divIndex].classList.add("winner");
     };
     const changeStatus = () => {
-        console.log(winner);
         statusDiv.innerHTML = "WINNER: " + winningLetter.toUpperCase();
         statusDiv.classList.add("winnerText");
     };
@@ -67,11 +67,10 @@ const handleCellClick = (e) => {
 
         if (xIsNext) {
             classList.add("x");
-            xIsNext = !xIsNext;
         } else {
             classList.add("o");
-            xIsNext = !xIsNext;
         }
+        xIsNext = !xIsNext;
         if (xIsNext) {
             statusDiv.innerHTML = "Next: X";
         } else {
@@ -86,6 +85,3 @@ resetDiv.addEventListener("click", handleReset);
 for (const cellDiv of cellDivs) {
     cellDiv.addEventListener("click", handleCellClick);
 }
-
-console.log(cellDivs);
-console.log(cellDivs[0]);
