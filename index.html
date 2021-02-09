@@ -9,9 +9,12 @@
     <body>
         <div class="container">
             <h1 class="title">Tic <span>Tac</span> Toe</h1>
-            <div class="status-action">
-                <div class="status">Next: X</div>
-                <div class="reset">Reset</div>
+            <div class="choice-container">
+                <div class="choice play-x selectable-choice">Play as X</div>
+                <div class="choice play-o selectable-choice">Play as O</div>
+                <div class="choice play-friend selectable-choice">
+                    Play against a friend
+                </div>
             </div>
             <div class="game-grid">
                 <div class="game-cell 0"></div>
@@ -23,6 +26,10 @@
                 <div class="game-cell 6"></div>
                 <div class="game-cell 7"></div>
                 <div class="game-cell 8"></div>
+            </div>
+            <div class="status-action">
+                <div class="status">Next: X</div>
+                <div class="reset">Reset</div>
             </div>
         </div>
         <script src="gameStatus.js"></script>

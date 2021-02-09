@@ -25,13 +25,46 @@ body {
     color: #fefae0;
 }
 
+.choice-container {
+    margin-top: 10px;
+    display: flex;
+    width: 480px;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.choice {
+    width: 200px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.selectable-choice {
+    cursor: pointer;
+}
+
+.selectable-choice:hover {
+    color: firebrick;
+}
+
+.selected-choice {
+    color: #fefae0;
+}
+
 .status-action {
     display: grid;
     margin-top: 20px;
+    margin-bottom: 0px;
     font-size: 25px;
     font-weight: bold;
     grid-template-columns: repeat(2, 3fr);
     text-align: center;
+}
+
+.current-player {
+    color: red;
 }
 
 .status-action span {
@@ -52,7 +85,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     grid-gap: 15px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .game-cell {

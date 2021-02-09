@@ -1,14 +1,12 @@
 let count = 0;
 const getBestMove = (gameStatus, nextPlayer, maxPlayer) => {
-    if (count > 5000) {
-        return;
-    }
     let otherPlayer = nextPlayer == "x" ? "o" : "x";
     let simStatus = [...gameStatus];
     let availableSquares = getAvailableSquares(simStatus);
-    /*if (availableSquares.length >= 5) {
-        return;
-    }*/
+    if (availableSquares.length == 9) {
+        return [Math.round(Math.random() * 9), null];
+        // to make games more interesting instead of going to 0 everytime as O.
+    }
     const winner = findWinner(simStatus);
     if (winner) {
         const scoreSign = winner[0] == maxPlayer ? 1 : -1;
@@ -28,19 +26,19 @@ const getBestMove = (gameStatus, nextPlayer, maxPlayer) => {
         bestMove = [null, Infinity];
     }
     let value;
-    //console.log(availableSquares);
+    //(availableSquares);
     for (const square of availableSquares) {
         simStatus[square] = nextPlayer;
-        //console.log(square);
-        //console.log("BEFORE::");
-        //console.log(simStatus);
+        //(square);
+        //("BEFORE::");
+        //(simStatus);
         let simBest = getBestMove(simStatus, otherPlayer, maxPlayer);
         simBest[0] = square;
         simStatus[square] = undefined;
-        //console.log("AFTER::");
-        //console.log(simStatus);
-        //console.log(square);
-        //console.log(simStatus);
+        //("AFTER::");
+        //(simStatus);
+        //(square);
+        //(simStatus);
         if (nextPlayer == maxPlayer) {
             if (simBest[1] > bestMove[1]) {
                 bestMove = simBest;
@@ -51,8 +49,8 @@ const getBestMove = (gameStatus, nextPlayer, maxPlayer) => {
             }
         }
     }
-    //console.log(best);
-    //console.log(count);
-    //count += 1;
+    //(best);
+    //(count);
+    count += 1;
     return bestMove;
 };

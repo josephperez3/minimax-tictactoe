@@ -1,17 +1,27 @@
 const statusDiv = document.querySelector(".status");
 const resetDiv = document.querySelector(".reset");
+const playODiv = document.querySelector(".play-o");
+const playXDiv = document.querySelector(".play-x");
+const playFriendDiv = document.querySelector(".play-friend");
+const choosePlayerDivs = document.querySelectorAll(".choice");
 const cellDivs = document.querySelectorAll(".game-cell");
 
 let gameIsLive = true;
 let xIsNext = true;
+let currentPlayer = "x";
 
-const checkGameStatus = () => {
+const getGameStatus = () => {
     gameStatus = [];
     for (const cellDiv of cellDivs) {
         gameStatus.push(cellDiv.classList[2]);
     }
+    return gameStatus;
+};
+
+const checkGameStatus = () => {
+    gameStatus = getGameStatus();
     nextPlayer = xIsNext ? "x" : "o";
-    console.log(getBestMove(gameStatus, nextPlayer, nextPlayer));
+    getBestMove(gameStatus, nextPlayer, nextPlayer);
     winner = findWinner(gameStatus);
     if (winner) {
         handleWinner(winner);
@@ -55,33 +65,108 @@ const handleReset = () => {
     }
     statusDiv.classList.remove("winnerText");
     statusDiv.innerHTML = "Next: X";
+    if (selectedChoice == "o") {
+        AIMove("x");
+    }
 };
 
 const handleCellClick = (e) => {
     if (gameIsLive) {
+        e.target;
         const classList = e.target.classList;
         const location = e.target.classList[1];
         if (classList[2] == "x" || classList[2] == "o") {
             return;
         }
-
-        if (xIsNext) {
-            classList.add("x");
-        } else {
-            classList.add("o");
+        makeMove(location);
+        //AIMove();
+        count;
+        if (selectedChoice != "friend") {
+            selectedChoice;
+            AIMove(selectedChoice);
         }
-        xIsNext = !xIsNext;
-        if (xIsNext) {
-            statusDiv.innerHTML = "Next: X";
-        } else {
-            statusDiv.innerHTML = "Next: <span>O</span>";
-        }
-        checkGameStatus();
     }
 };
+
+let selectedChoice;
+let AIPlayer;
+const chooseO = () => {
+    if (selectedChoice == "o") {
+        return;
+    }
+    ("o");
+    for (choice of choosePlayerDivs) {
+        choice.classList.remove("selected-choice");
+        choice.classList.add("selectable-choice");
+    }
+    playODiv.classList.remove("selectable-choice");
+    playODiv.classList.add("selected-choice");
+    selectedChoice = "o";
+    handleReset();
+};
+
+const chooseX = () => {
+    if (selectedChoice == "x") {
+        return;
+    }
+    ("o");
+    for (choice of choosePlayerDivs) {
+        choice.classList.remove("selected-choice");
+        choice.classList.add("selectable-choice");
+    }
+    playXDiv.classList.remove("selectable-choice");
+    playXDiv.classList.add("selected-choice");
+    selectedChoice = "x";
+    handleReset();
+};
+
+const chooseFriend = () => {
+    if (selectedChoice == "friend") {
+        return;
+    }
+    ("friend");
+    for (choice of choosePlayerDivs) {
+        choice.classList.remove("selected-choice");
+        choice.classList.add("selectable-choice");
+    }
+    playFriendDiv.classList.remove("selectable-choice");
+    playFriendDiv.classList.add("selected-choice");
+    selectedChoice = "friend";
+    handleReset();
+};
+
+playODiv.addEventListener("click", chooseO);
+playXDiv.addEventListener("click", chooseX);
+playFriendDiv.addEventListener("click", chooseFriend);
 
 resetDiv.addEventListener("click", handleReset);
 
 for (const cellDiv of cellDivs) {
     cellDiv.addEventListener("click", handleCellClick);
 }
+
+const makeMove = (location) => {
+    target = cellDivs[location];
+    target;
+    if (xIsNext) {
+        target.classList.add("x");
+    } else {
+        target.classList.add("o");
+    }
+    xIsNext = !xIsNext;
+    if (xIsNext) {
+        statusDiv.innerHTML = "Next: X";
+    } else {
+        statusDiv.innerHTML = "Next: <span>O</span>";
+    }
+    //(xIsNext);
+    checkGameStatus();
+};
+
+const AIMove = (AIplayer) => {
+    gameStatus = getGameStatus();
+    bestMove = getBestMove(gameStatus, AIplayer, AIplayer)[0];
+    makeMove(bestMove);
+};
+
+chooseX();
