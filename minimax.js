@@ -1,11 +1,12 @@
-let count = 0;
+// getBestMove returns [best move, value of best move]
 const getBestMove = (gameStatus, nextPlayer, maxPlayer) => {
     let otherPlayer = nextPlayer == "x" ? "o" : "x";
     let simStatus = [...gameStatus];
     let availableSquares = getAvailableSquares(simStatus);
     if (availableSquares.length == 9) {
         return [Math.round(Math.random() * 9), null];
-        // to make games more interesting instead of going to 0 everytime as O.
+        // to make games more interesting instead of going to 0
+        // everytime as O's first move.
     }
     const winner = findWinner(simStatus);
     if (winner) {
@@ -22,35 +23,32 @@ const getBestMove = (gameStatus, nextPlayer, maxPlayer) => {
     let bestMove;
     if (nextPlayer == maxPlayer) {
         bestMove = [null, -Infinity];
+        // trying to maximize score
     } else {
         bestMove = [null, Infinity];
+        // trying to minimize score
     }
-    let value;
-    //(availableSquares);
     for (const square of availableSquares) {
         simStatus[square] = nextPlayer;
-        //(square);
-        //("BEFORE::");
-        //(simStatus);
+        // pretend we made one of the moves available in availableSquares
         let simBest = getBestMove(simStatus, otherPlayer, maxPlayer);
         simBest[0] = square;
         simStatus[square] = undefined;
-        //("AFTER::");
-        //(simStatus);
-        //(square);
-        //(simStatus);
+        // undo simulated move made earlier
+
         if (nextPlayer == maxPlayer) {
             if (simBest[1] > bestMove[1]) {
                 bestMove = simBest;
+                // if the value is greater, this is the new best move
+                // for the max player.
             }
         } else {
             if (simBest[1] < bestMove[1]) {
                 bestMove = simBest;
+                // if the value is smaller, this is the new best move
+                // for the other player.
             }
         }
     }
-    //(best);
-    //(count);
-    count += 1;
     return bestMove;
 };

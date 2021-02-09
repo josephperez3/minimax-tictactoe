@@ -1,23 +1,7 @@
-const statusDiv = document.querySelector(".status");
-const resetDiv = document.querySelector(".reset");
-const playODiv = document.querySelector(".play-o");
-const playXDiv = document.querySelector(".play-x");
-const playFriendDiv = document.querySelector(".play-friend");
-const choosePlayerDivs = document.querySelectorAll(".choice");
-const cellDivs = document.querySelectorAll(".game-cell");
-
 let gameIsLive = true;
 let xIsNext = true;
-let currentPlayer = "x";
 
-const getGameStatus = () => {
-    gameStatus = [];
-    for (const cellDiv of cellDivs) {
-        gameStatus.push(cellDiv.classList[2]);
-    }
-    return gameStatus;
-};
-
+// check if game is won/tied and proceed accordingly.
 const checkGameStatus = () => {
     gameStatus = getGameStatus();
     nextPlayer = xIsNext ? "x" : "o";
@@ -30,6 +14,11 @@ const checkGameStatus = () => {
     }
 };
 
+// event handlers
+const statusDiv = document.querySelector(".status");
+const cellDivs = document.querySelectorAll(".game-cell");
+
+// handle terminal game states
 const handleWinner = (winner) => {
     const winningLetter = winner[0];
     const cell1 = winner[1];
@@ -55,6 +44,9 @@ const handleTie = () => {
     gameIsLive = false;
 };
 
+// Handle buttons
+const resetDiv = document.querySelector(".reset");
+
 const handleReset = () => {
     gameIsLive = true;
     xIsNext = true;
@@ -69,6 +61,7 @@ const handleReset = () => {
         AIMove("x");
     }
 };
+resetDiv.addEventListener("click", handleReset);
 
 const handleCellClick = (e) => {
     if (gameIsLive) {
@@ -79,37 +72,31 @@ const handleCellClick = (e) => {
             return;
         }
         makeMove(location);
-        //AIMove();
-        count;
         if (selectedChoice != "friend") {
             selectedChoice;
             AIMove(selectedChoice);
+            // make AI move after player move
         }
     }
 };
+for (const cellDiv of cellDivs) {
+    cellDiv.addEventListener("click", handleCellClick);
+}
+
+// Player choice buttons
+const playODiv = document.querySelector(".play-o");
+const playXDiv = document.querySelector(".play-x");
+const playFriendDiv = document.querySelector(".play-friend");
+const choosePlayerDivs = document.querySelectorAll(".choice");
 
 let selectedChoice;
 let AIPlayer;
-const chooseO = () => {
-    if (selectedChoice == "o") {
-        return;
-    }
-    ("o");
-    for (choice of choosePlayerDivs) {
-        choice.classList.remove("selected-choice");
-        choice.classList.add("selectable-choice");
-    }
-    playODiv.classList.remove("selectable-choice");
-    playODiv.classList.add("selected-choice");
-    selectedChoice = "o";
-    handleReset();
-};
+let currentPlayer = "x";
 
 const chooseX = () => {
     if (selectedChoice == "x") {
         return;
     }
-    ("o");
     for (choice of choosePlayerDivs) {
         choice.classList.remove("selected-choice");
         choice.classList.add("selectable-choice");
@@ -119,12 +106,27 @@ const chooseX = () => {
     selectedChoice = "x";
     handleReset();
 };
+playXDiv.addEventListener("click", chooseX);
+
+const chooseO = () => {
+    if (selectedChoice == "o") {
+        return;
+    }
+    for (choice of choosePlayerDivs) {
+        choice.classList.remove("selected-choice");
+        choice.classList.add("selectable-choice");
+    }
+    playODiv.classList.remove("selectable-choice");
+    playODiv.classList.add("selected-choice");
+    selectedChoice = "o";
+    handleReset();
+};
+playODiv.addEventListener("click", chooseO);
 
 const chooseFriend = () => {
     if (selectedChoice == "friend") {
         return;
     }
-    ("friend");
     for (choice of choosePlayerDivs) {
         choice.classList.remove("selected-choice");
         choice.classList.add("selectable-choice");
@@ -134,17 +136,9 @@ const chooseFriend = () => {
     selectedChoice = "friend";
     handleReset();
 };
-
-playODiv.addEventListener("click", chooseO);
-playXDiv.addEventListener("click", chooseX);
 playFriendDiv.addEventListener("click", chooseFriend);
 
-resetDiv.addEventListener("click", handleReset);
-
-for (const cellDiv of cellDivs) {
-    cellDiv.addEventListener("click", handleCellClick);
-}
-
+// make move and change game state
 const makeMove = (location) => {
     target = cellDivs[location];
     target;
@@ -159,7 +153,6 @@ const makeMove = (location) => {
     } else {
         statusDiv.innerHTML = "Next: <span>O</span>";
     }
-    //(xIsNext);
     checkGameStatus();
 };
 
@@ -169,4 +162,4 @@ const AIMove = (AIplayer) => {
     makeMove(bestMove);
 };
 
-chooseX();
+chooseX(); // set as default button pressed

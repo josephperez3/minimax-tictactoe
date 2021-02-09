@@ -2,6 +2,15 @@
 
 // findWinner returns [winning player, winning squares] if there is a winner,
 // and false if otherwise.
+
+const getGameStatus = () => {
+    gameStatus = [];
+    for (const cellDiv of cellDivs) {
+        gameStatus.push(cellDiv.classList[2]);
+    }
+    return gameStatus;
+};
+
 const findWinner = (gameStatus) => {
     // check if 3 cells are matching and not undefined
     const isWinner = (cell1, cell2, cell3) => {
