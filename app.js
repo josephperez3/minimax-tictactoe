@@ -64,7 +64,6 @@ const handleReset = () => {
 resetDiv.addEventListener("click", handleReset);
 
 const handleCellClick = (e) => {
-    e.target;
     const classList = e.target.classList;
     const location = e.target.classList[1];
     if (classList[2] == "x" || classList[2] == "o") {
@@ -141,8 +140,7 @@ playFriendDiv.addEventListener("click", chooseFriend);
 // make move and change game state
 const makeMove = (location) => {
     if (gameIsLive) {
-        target = cellDivs[location];
-        target;
+        const target = cellDivs[location];
         if (xIsNext) {
             target.classList.add("x");
         } else {
@@ -158,9 +156,9 @@ const makeMove = (location) => {
     }
 };
 
-const AIMove = (AIplayer) => {
+const AIMove = (AIPlayer) => {
     gameStatus = getGameStatus();
-    bestMove = getBestMove(gameStatus, "o", "o");
+    bestMove = getBestMove(gameStatus, AIPlayer, AIPlayer);
     makeMove(bestMove[0]);
 };
 
