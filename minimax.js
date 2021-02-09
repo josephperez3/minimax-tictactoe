@@ -1,8 +1,9 @@
 // getBestMove returns [best move, value of best move]
-const getBestMove = (gameStatus, nextPlayer, maxPlayer) => {
+const getBestMove = (gameStatus, nextPlayer, maxPlayer, scoreSum) => {
     let otherPlayer = nextPlayer == "x" ? "o" : "x";
     let simStatus = [...gameStatus];
     let availableSquares = getAvailableSquares(simStatus);
+
     if (availableSquares.length == 9) {
         return [Math.round(Math.random() * 9), null];
         // to make games more interesting instead of going to 0
@@ -13,11 +14,13 @@ const getBestMove = (gameStatus, nextPlayer, maxPlayer) => {
         const scoreSign = winner[0] == maxPlayer ? 1 : -1;
         const emptySquares = availableSquares.length + 1;
         // since we're looking a move ahead, add 1.
-        return [null, scoreSign * emptySquares];
+        let newSum = scoreSum + scoreSign * emptySquares;
+        // we'll be adding all the nodes together
+        return [null, newSum];
         // null will be replaced by the previous move that led to a win.
     }
     if (checkTie(simStatus)) {
-        return [null, 0];
+        return [null, scoreSum];
         // null will be replaced by the previous move that led to a draw.
     }
     let bestMove;
@@ -31,7 +34,7 @@ const getBestMove = (gameStatus, nextPlayer, maxPlayer) => {
     for (const square of availableSquares) {
         simStatus[square] = nextPlayer;
         // pretend we made one of the moves available in availableSquares
-        let simBest = getBestMove(simStatus, otherPlayer, maxPlayer);
+        let simBest = getBestMove(simStatus, otherPlayer, maxPlayer, 0);
         simBest[0] = square;
         simStatus[square] = undefined;
         // undo simulated move made earlier

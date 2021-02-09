@@ -64,19 +64,17 @@ const handleReset = () => {
 resetDiv.addEventListener("click", handleReset);
 
 const handleCellClick = (e) => {
-    if (gameIsLive) {
-        e.target;
-        const classList = e.target.classList;
-        const location = e.target.classList[1];
-        if (classList[2] == "x" || classList[2] == "o") {
-            return;
-        }
-        makeMove(location);
-        if (selectedChoice != "friend") {
-            selectedChoice;
-            AIMove(selectedChoice);
-            // make AI move after player move
-        }
+    e.target;
+    const classList = e.target.classList;
+    const location = e.target.classList[1];
+    if (classList[2] == "x" || classList[2] == "o") {
+        return;
+    }
+    makeMove(location);
+    if (selectedChoice != "friend") {
+        selectedChoice;
+        AIMove(AIPlayer);
+        // make AI move after player move
     }
 };
 for (const cellDiv of cellDivs) {
@@ -104,6 +102,7 @@ const chooseX = () => {
     playXDiv.classList.remove("selectable-choice");
     playXDiv.classList.add("selected-choice");
     selectedChoice = "x";
+    AIPlayer = "o";
     handleReset();
 };
 playXDiv.addEventListener("click", chooseX);
@@ -119,6 +118,7 @@ const chooseO = () => {
     playODiv.classList.remove("selectable-choice");
     playODiv.classList.add("selected-choice");
     selectedChoice = "o";
+    AIPlayer = "x";
     handleReset();
 };
 playODiv.addEventListener("click", chooseO);
@@ -140,26 +140,28 @@ playFriendDiv.addEventListener("click", chooseFriend);
 
 // make move and change game state
 const makeMove = (location) => {
-    target = cellDivs[location];
-    target;
-    if (xIsNext) {
-        target.classList.add("x");
-    } else {
-        target.classList.add("o");
+    if (gameIsLive) {
+        target = cellDivs[location];
+        target;
+        if (xIsNext) {
+            target.classList.add("x");
+        } else {
+            target.classList.add("o");
+        }
+        xIsNext = !xIsNext;
+        if (xIsNext) {
+            statusDiv.innerHTML = "Next: X";
+        } else {
+            statusDiv.innerHTML = "Next: <span>O</span>";
+        }
+        checkGameStatus();
     }
-    xIsNext = !xIsNext;
-    if (xIsNext) {
-        statusDiv.innerHTML = "Next: X";
-    } else {
-        statusDiv.innerHTML = "Next: <span>O</span>";
-    }
-    checkGameStatus();
 };
 
 const AIMove = (AIplayer) => {
     gameStatus = getGameStatus();
-    bestMove = getBestMove(gameStatus, AIplayer, AIplayer)[0];
-    makeMove(bestMove);
+    bestMove = getBestMove(gameStatus, "o", "o");
+    makeMove(bestMove[0]);
 };
 
 chooseX(); // set as default button pressed
